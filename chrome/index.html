@@ -95,6 +95,7 @@
         <div id="request-types" class="clearfix">
             <ul class="request-helper-tabs">
                 <li class="active" data-id="normal">Normal</li>
+                <li data-id="uapiAuth">UAPI Auth</li>
                 <li data-id="basicAuth">Basic Auth</li>
                 <li data-id="digestAuth">Digest Auth</li>
                 <li data-id="oAuth1">OAuth 1.0</li>
@@ -142,6 +143,26 @@
         </div>
         <div id="request-helpers" class="clearfix">
             <div id="request-helper-normal" class="request-helpers"></div>
+            <div id="request-helper-uapiAuth" class="request-helpers">
+                <div class="request-helper-form-container">
+                    <form class="form form-horizontal">
+                        <div class="control-group">
+                            <label class="control-label">Username</label>
+
+                            <div class="controls">
+                                <input type="text" id="request-helper-uapiAuth-username" class="clean-input"/>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">Password</label>
+
+                            <div class="controls">
+                                <input type="password" id="request-helper-uapiAuth-password" class="clean-input"/>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
             <div id="request-helper-basicAuth" class="request-helpers">
                 <div class="request-helper-form-container">
                     <form class="form form-horizontal">
