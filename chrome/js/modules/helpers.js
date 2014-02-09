@@ -98,8 +98,10 @@ pm.helpers = {
             var _timestamp = String(new Date().getTime());
             var _request_method = pm.request.method;
             var _request_url = new URL(pm.request.url);
-            var _request_body = pm.request.getRequestBodyToBeSent();
-            _request_body = pm.request.body.getData(true);
+            var _request_body = '';
+            if (pm.request.isMethodWithBody(pm.request.method)) {
+                _request_body = pm.request.getRequestBodyToBeSent();
+            }
             var _request_body_hash = hex_sha1(_request_body);
             var _request_hash = (
                 _timestamp +
