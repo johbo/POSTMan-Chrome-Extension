@@ -83,6 +83,34 @@ pm.helpers = {
         }
     },
 
+    uapiauth: {
+        process: function() {
+            var headers = pm.request.headers;
+            // TODO: why is this not "Authorization" like all others?
+            var auth_header_key = "Authentication";
+
+            // TODO: get from form
+            var _user = pm.envManager.getCurrentValue('{{uapi_username}}');
+            var _secret = pm.envManager.getCurrentValue('{{uapi_secret}}');
+
+            var _timestamp = String(new Date().getTime());
+            var _request_method = pm.request.method;
+            var _request_url = new URL(pm.request.url);
+            var _request_body = pm.request.getRequestBodyToBeSent();
+            _request_body = pm.request.body.getData(true);
+            var _request_body_hash = hex_sha1(_request_body);
+            var _request_hash = (
+                _timestamp +
+                _request_method +
+                _request_url.pathname +
+                _request_body_hash);
+            var _hmac = hex_hmac_sha1(_secret, _request_hash);
+
+            pm.request.setHeaderValue(
+                auth_header_key, _user + '.' + _timestamp + '.' + _hmac);
+        },
+    },
+
     digest: {
         getHeader: function () {
             var algorithm = pm.envManager.getCurrentValue($("#request-helper-digestAuth-realm").val());
@@ -132,7 +160,7 @@ pm.helpers = {
             if(qop === "auth-int") {
                 a2 = method + ":" + digestUri + ":" + body;
             }
-            else {                
+            else {
                 a2 = method + ":" + digestUri;
                 console.log(qop, a2);
             }

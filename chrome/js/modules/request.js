@@ -1740,6 +1740,10 @@ pm.request = {
             pm.helpers.oAuth1.process();
         }
 
+        if (pm.helpers.activeHelper == "uapiauth") {
+            pm.helpers.uapiauth.process();
+        }
+
         $('#headers-keyvaleditor-actions-open .headers-count').html(pm.request.headers.length);
         pm.request.url = pm.request.processUrl($('#url').val());
         pm.request.startTime = new Date().getTime();
@@ -2005,27 +2009,6 @@ pm.request = {
             xhr.setRequestHeader(headers[i].name, headers[i].value);
             console.log('setting header ', headers[i].name);
         }
-
-        // TODO: move to some smart place! Only when UAPI auth selected
-
-        // TODO: get from form or even from environment
-        var _user = pm.envManager.getCurrentValue('{{uapi_username}}');
-        var _secret = pm.envManager.getCurrentValue('{{uapi_secret}}');
-
-        var _timestamp = String(new Date().getTime());
-        var _request_method = method;
-        var _request_url = new URL(originalUrl);
-        var _request_body = originalData;
-        var _request_body_hash = hex_sha1(_request_body);
-        var _request_hash = (
-            _timestamp +
-            _request_method +
-            _request_url.pathname +
-            _request_body_hash);
-        var _hmac = hex_hmac_sha1(_secret, _request_hash);
-
-
-        xhr.setRequestHeader('Authentication', _user + '.' + _timestamp + '.' + _hmac);
 
         // Prepare body
         if (pm.request.isMethodWithBody(method)) {
