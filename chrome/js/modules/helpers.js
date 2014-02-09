@@ -104,7 +104,7 @@ pm.helpers = {
             var _request_hash = (
                 _timestamp +
                 _request_method +
-                _request_url.pathname +
+                _request_url.pathname + _request_url.search +
                 _request_body_hash);
             var _hmac = hex_hmac_sha1(secret, _request_hash);
 
