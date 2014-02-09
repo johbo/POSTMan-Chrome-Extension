@@ -2007,7 +2007,6 @@ pm.request = {
         var headers = pm.request.getXhrHeaders(headers);
         for (var i = 0; i < headers.length; i++) {
             xhr.setRequestHeader(headers[i].name, headers[i].value);
-            console.log('setting header ', headers[i].name);
         }
 
         // Prepare body
