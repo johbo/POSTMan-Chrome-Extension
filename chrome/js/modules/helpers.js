@@ -112,7 +112,7 @@ pm.helpers = {
 
             pm.request.setHeaderValue(
                 auth_header_key, username + '.' + _timestamp + '.' + _hmac);
-        },
+        }
     },
 
     digest: {
